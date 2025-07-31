@@ -11,3 +11,5 @@ Thumbs.db
 *.crx
 .cache/
 .env
+dist/
+build/
