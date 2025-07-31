@@ -3,14 +3,7 @@
   "name": "imhotep-zetep-ext",
   "version": "0.0.1",
   "description": "An extension for the Zetep task manager.",
-  "permissions": [
-    "cookies",
-    "storage",
-    "activeTab",
-    "scripting",
-    "webRequest",
-    "webRequestBlocking"
-  ],
+  "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": ["*://*.zetep.com/*"],
   "background": {
     "service_worker": "background.js"

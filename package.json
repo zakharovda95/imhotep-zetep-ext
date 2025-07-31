@@ -21,9 +21,10 @@
   ],
   "scripts": {
     "run": "parcel",
-    "build": "npm run build-src && npm run copy-public",
+    "build": "npm run rm-dist && npm run build-src && npm run copy-public",
     "build-src": "parcel build src/popup.html src/background.ts src/content.ts --dist-dir dist --no-source-maps --no-content-hash --public-url ./",
     "copy-public": "cpx public/manifest.json dist && cpx public/icons/* dist/icons",
+    "rm-dist": "rimraf dist",
     "eslint": "eslint . --max-warnings=0",
     "prettier": "prettier . --write",
     "prepare": "husky"
@@ -39,6 +40,7 @@
     "husky": "^9.1.7",
     "parcel": "latest",
     "prettier": "^2.4.1",
+    "rimraf": "^6.0.1",
     "sass": "^1.89.2",
     "typescript": "^5.1.6"
   }

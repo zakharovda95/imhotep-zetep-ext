@@ -1,0 +1,37 @@
+$bg-white: #f4f4f4;
+$spacing-base: 16px;
+$spacing-small: 8px;
+$font-size-base: 16px;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-size: $font-size-base;
+}
+
+.imhotep-ext {
+  min-width: 250px;
+  background-color: $bg-white;
+  padding: $spacing-base;
+  cursor: pointer;
+
+  &-popup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-small;
+
+    &__text {
+      font-weight: 500;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+  }
+}
