@@ -22,7 +22,7 @@
   "scripts": {
     "run": "parcel",
     "build": "parcel build src/popup.html src/background.ts src/content.ts --dist-dir dist --no-content-hash --public-url ./",
-    "eslint": "eslint .",
+    "eslint": "eslint . --max-warnings=0",
     "prettier": "prettier . --write",
     "prepare": "husky"
   },

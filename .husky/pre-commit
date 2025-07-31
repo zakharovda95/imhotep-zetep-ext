@@ -1,17 +1,14 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "Running npm run lint..."
-npm run lint
+echo "Линтуем...."
+npm run eslint
 lint_status=$?
 
 if [ $lint_status -ne 0 ]; then
-  echo "ESLint found errors. Commit aborted."
+  echo "Исправьте ошибки линтинга"
   exit $lint_status
 fi
 
-echo "ESLint passed. Running npm run format..."
-npm run format
+echo "Линтинг прошел успешно. Автоформатирование кода...."
+npm run prettier
 
-echo "Pre-commit checks passed."
+echo "Успешно! Фиксируем изменения...."
 exit 0
