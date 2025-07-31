@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running npm run lint..."
+npm run lint
+lint_status=$?
+
+if [ $lint_status -ne 0 ]; then
+  echo "ESLint found errors. Commit aborted."
+  exit $lint_status
+fi
+
+echo "ESLint passed. Running npm run format..."
+npm run format
+
+echo "Pre-commit checks passed."
+exit 0

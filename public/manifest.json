@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "imhotep-zetep-ext",
+  "version": "0.0.1",
+  "description": "An extension for the Zetep task manager.",
+  "permissions": [
+    "cookies",
+    "storage",
+    "activeTab",
+    "scripting",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "host_permissions": ["*://*.zetep.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "24": "icons/imhotep-icon-24.png",
+      "48": "icons/imhotep-icon-48.png",
+      "128": "icons/imhotep-icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.zetep.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

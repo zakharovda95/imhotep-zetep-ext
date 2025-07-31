@@ -1,0 +1,42 @@
+{
+  "name": "imhotep-zetep-ext",
+  "version": "0.0.1",
+  "description": "An extension for the Zetep task manager.",
+  "keywords": [
+    "Chrome",
+    "Chromium",
+    "Zetep",
+    "Extension",
+    "Web",
+    "Browser"
+  ],
+  "license": "MIT",
+  "author": "@zakharovda95 <zakharovda95@gmail.com>",
+  "type": "module",
+  "source": "src/popup.html",
+  "browserslist": [
+    "Chrome >= 110",
+    ">0.2%",
+    "not dead"
+  ],
+  "scripts": {
+    "run": "parcel",
+    "build": "parcel build src/popup.html src/background.ts src/content.ts --dist-dir dist --no-content-hash --public-url ./",
+    "eslint": "eslint .",
+    "prettier": "prettier . --write",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.15.4",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^9.1.7",
+    "parcel": "latest",
+    "prettier": "^2.4.1",
+    "sass": "^1.89.2",
+    "typescript": "^5.1.6"
+  }
+}
