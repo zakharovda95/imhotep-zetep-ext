@@ -1,0 +1,71 @@
+$status-color-active: #00ff40;
+$status-color-inactive: #c20000;
+$grey: #cccccc;
+$blue: rgb(0, 146, 202);
+$white: rgb(255, 255, 255);
+$border: 1px solid $grey;
+$spacing-small: 5px;
+$border-left: 1px solid $grey;
+
+.imhotep-ext-active-task,
+.imhotep-ext-active-task__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imhotep-ext-active-task {
+  width: fit-content;
+  height: 100%;
+  min-width: 50px;
+  flex-direction: column;
+  gap: $spacing-small;
+  border-left: $border-left;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue;
+
+    .imhotep-ext-active-task__icon {
+      svg {
+        fill: $white;
+        color: $white;
+      }
+    }
+  }
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+    flex-direction: row;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__status {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: $border;
+
+    &.--active {
+      background-color: $status-color-active;
+    }
+    &.--inactive {
+      background-color: $status-color-inactive;
+    }
+  }
+
+  &__context-menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 300px;
+    padding: 8px;
+    background: $white;
+    border: $border;
+  }
+}

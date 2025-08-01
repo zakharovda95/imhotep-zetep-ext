@@ -3,7 +3,7 @@ class Popup {
   private readonly zetepUrl: string = 'https://eds.zetep.com/';
 
   constructor() {
-    this.container = document.querySelector('.imhotep-ext');
+    this.container = document.querySelector('.imhotep-ext') ?? null;
   }
 
   private get template(): string {
@@ -24,20 +24,12 @@ class Popup {
   }
 
   private addListeners(): void {
-    if (!this.container) {
-      console.log('container is null');
-      return;
-    }
+    if (!this.container) return;
 
     const popup: HTMLElement | null = this.container.querySelector('.imhotep-ext-popup');
-    if (!popup) {
-      console.log('popup is null');
-      return;
-    }
+    if (!popup) return;
 
-    popup.addEventListener('click', (event: MouseEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
+    popup.addEventListener('click', () => {
       // @ts-ignore
       const chromeObject = chrome;
       if (typeof chromeObject !== 'undefined' && chromeObject.tabs && chromeObject.tabs.create) {
@@ -47,5 +39,9 @@ class Popup {
   }
 }
 
-const popup: Popup = new Popup();
-popup.init();
+document.addEventListener('DOMContentLoaded', (): void => {
+  const popup: Popup = new Popup();
+  popup.init();
+
+  console.log('popup was loaded');
+});

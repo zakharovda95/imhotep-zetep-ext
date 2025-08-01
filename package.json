@@ -22,7 +22,7 @@
   "scripts": {
     "run": "parcel",
     "build": "npm run rm-dist && npm run build-src && npm run copy-public",
-    "build-src": "parcel build src/popup.html src/background.ts src/content.ts --dist-dir dist --no-source-maps --no-content-hash --public-url ./",
+    "build-src": "parcel build src/popup.html src/background.ts src/content.ts src/content.scss --dist-dir dist --no-source-maps --no-content-hash --public-url ./",
     "copy-public": "cpx public/manifest.json dist && cpx public/icons/* dist/icons",
     "rm-dist": "rimraf dist",
     "eslint": "eslint . --max-warnings=0",
