@@ -2,13 +2,13 @@ echo "Линтуем...."
 npm run eslint
 lint_status=$?
 
+echo "Форматируем код...."
+npm run prettier
+
 if [ $lint_status -ne 0 ]; then
   echo "Исправьте ошибки линтинга"
   exit $lint_status
 fi
 
-echo "Линтинг прошел успешно. Автоформатирование кода...."
-npm run prettier
-
-echo "Успешно! Фиксируем изменения...."
+echo "Линтинг прошел успешно. Фиксируем изменения...."
 exit 0

@@ -1,10 +1,11 @@
 import Icon from './infrastructure/icons';
-import { eventTargetOrNull, htmlElementOrNull } from './infrastructure/types';
+import { eventTargetOrNull, htmlElementOrNull, listenersMapCallback } from './infrastructure/types';
+import Observer from './infrastructure/observer';
 
 class ActiveTaskWidget {
   private readonly container: htmlElementOrNull = null;
-  private widget: htmlElementOrNull = null;
   private widgetContextMenu: htmlElementOrNull = null;
+  private listenersMap: WeakMap<HTMLElement, listenersMapCallback> = new WeakMap();
 
   constructor() {
     this.container = document.querySelector('.appRight') ?? null;
@@ -23,14 +24,18 @@ class ActiveTaskWidget {
             </div>`;
   }
 
+  private get rememberTaskButtonTemplate(): string {
+    return ``;
+  }
+
   public init() {
     if (!this.container) return;
 
     this.container.style.position = 'relative';
     this.render(this.widgetTemplate);
-    this.widget = this.container.querySelector('.imhotep-ext-active-task') ?? null;
 
     this.setListeners();
+    this.observeDOM();
   }
 
   private render(template: string, position: InsertPosition = 'afterbegin'): void {
@@ -41,27 +46,38 @@ class ActiveTaskWidget {
   private setListeners(): void {
     if (!this.container) return;
 
-    document.addEventListener('click', (event: MouseEvent) => {
-      event.stopPropagation();
+    const documentClickHandler = (event: MouseEvent): void => {
       const target: eventTargetOrNull = event.target;
       if (!target) return;
       this.onDocumentClick(target as HTMLElement);
-    });
+    };
 
-    this.container.addEventListener('click', (event: MouseEvent) => {
+    const containerClickHandler = (event: MouseEvent): void => {
       const target: eventTargetOrNull = event.target;
       if (!target) return;
-      const isClickInsideOfWidgetContextMenu: boolean = this.getIsClickInsideOfWidgetContextMenu(
+      const isClickInsideOfWidgetContextMenu: boolean = this.checkIsClickInsideOfWidgetContextMenu(
         target as HTMLElement,
       );
       if (isClickInsideOfWidgetContextMenu) event.stopPropagation();
-    });
+    };
+
+    document.body.addEventListener('click', (event: MouseEvent): void =>
+      documentClickHandler(event),
+    );
+    if (!this.listenersMap.has(document.body))
+      this.listenersMap.set(document.body, documentClickHandler);
+
+    this.container.addEventListener('click', (event: MouseEvent): void =>
+      containerClickHandler(event),
+    );
+    if (!this.listenersMap.has(this.container))
+      this.listenersMap.set(this.container, containerClickHandler);
   }
 
   private onDocumentClick(eventTarget: HTMLElement): void {
     const isClickInsideOfWidget = Boolean(eventTarget.closest('.imhotep-ext-active-task'));
     const isClickInsideOfWidgetContextMenu: boolean =
-      this.getIsClickInsideOfWidgetContextMenu(eventTarget);
+      this.checkIsClickInsideOfWidgetContextMenu(eventTarget);
     const isMenuOpen = Boolean(this.widgetContextMenu);
 
     if (isClickInsideOfWidget) {
@@ -70,6 +86,19 @@ class ActiveTaskWidget {
         else this.closeWidgetContextMenu();
       } else this.openWidgetContextMenu();
     } else this.closeWidgetContextMenu();
+  }
+
+  private observeDOM(): void {
+    const onAdded = (node: Node): void => {
+      console.log('Окно с таской открыто', node);
+    };
+
+    const onRemoved = (node: Node): void => {
+      // удаляем обработчики
+      console.log('Окно с таской закрыто', node);
+    };
+    const observer: Observer = new Observer(document.body);
+    observer.observe('[app-issue-form]', onAdded, onRemoved);
   }
 
   private openWidgetContextMenu(): void {
@@ -85,7 +114,7 @@ class ActiveTaskWidget {
     this.widgetContextMenu = null;
   }
 
-  private getIsClickInsideOfWidgetContextMenu(target: HTMLElement): boolean {
+  private checkIsClickInsideOfWidgetContextMenu(target: HTMLElement): boolean {
     return Boolean(target && target.closest('.imhotep-ext-active-task__context-menu'));
   }
 }
