@@ -1,4 +1,4 @@
-import { observerHandlerCallback } from './types';
+import { TObserverHandlerCallback } from './types';
 
 class Observer {
   private readonly root: Node;
@@ -6,13 +6,13 @@ class Observer {
 
   constructor(root: Node) {
     this.root = root;
-    if (!this.root) throw new Error('[observer] Не передан корневой узел для отслеживания.');
+    if (!this.root) throw new Error('[observer]: Не передан корневой узел для отслеживания.');
   }
 
   public observe(
     selector: string,
-    addedCb: observerHandlerCallback,
-    removedCb: observerHandlerCallback,
+    addedCb: TObserverHandlerCallback,
+    removedCb: TObserverHandlerCallback,
   ): void {
     if (!addedCb || !addedCb || !removedCb) return;
 
@@ -34,7 +34,7 @@ class Observer {
   private callIfNodeExists(
     nodes: NodeList,
     selector: string,
-    cb: observerHandlerCallback,
+    cb: TObserverHandlerCallback,
   ): boolean {
     if (!nodes.length || !cb || !selector) return false;
 
